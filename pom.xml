@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.uvsq.cprog</groupId>
@@ -9,7 +12,6 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>collex</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
@@ -27,14 +29,15 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+
+    <pluginManagement>
       <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+   
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.2.0</version>
         </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.3.0</version>
@@ -59,7 +62,7 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>4.0.0-M3</version>
@@ -72,30 +75,65 @@
     </pluginManagement>
 
     <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-checkstyle-plugin</artifactId>
-      <version>3.3.1</version>
-      <dependencies>
-        <dependency>
-          <groupId>com.puppycrawl.tools</groupId>
-          <artifactId>checkstyle</artifactId>
-          <version>10.15.0</version>
-        </dependency>
-      </dependencies>
-      <configuration>
-        <configLocation>google_checks.xml</configLocation>
-        <consoleOutput>true</consoleOutput>
-        <failOnViolation>true</failOnViolation>
-        <encoding>${project.build.sourceEncoding}</encoding>
-      </configuration>
-      <executions>
-        <execution>
-          <phase>validate</phase>
-          <goals><goal>check</goal></goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.3.1</version>
+
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>10.15.0</version>
+          </dependency>
+        </dependencies>
+
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+          <consoleOutput>true</consoleOutput>
+          <failOnViolation>true</failOnViolation>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Correction de l’avertissement "Plugin execution not covered by lifecycle configuration" -->
+      <plugin>
+        <groupId>org.eclipse.m2e</groupId>
+        <artifactId>lifecycle-mapping</artifactId>
+        <version>1.0.0</version>
+        <configuration>
+          <lifecycleMappingMetadata>
+            <pluginExecutions>
+              <pluginExecution>
+                <pluginExecutionFilter>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-checkstyle-plugin</artifactId>
+                  <versionRange>[3.3.1,)</versionRange>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </pluginExecutionFilter>
+                <action>
+                  <ignore/>
+                </action>
+              </pluginExecution>
+            </pluginExecutions>
+          </lifecycleMappingMetadata>
+        </configuration>
+      </plugin>
+
+    </plugins>
+
   </build>
+
 </project>
