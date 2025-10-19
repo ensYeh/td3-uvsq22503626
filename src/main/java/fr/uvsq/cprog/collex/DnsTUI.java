@@ -1,6 +1,5 @@
 package fr.uvsq.cprog.collex;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -55,24 +54,21 @@ public final class DnsTUI {
     if (texte != null && !texte.isBlank()) out.println(texte);
   }
 
-  private Commande buildAdd(String[] tok) {
-    if (tok.length != 3) {
-      return dns -> "ERREUR : usage = add <ip> <nom.qualifie>";
+private Commande buildAdd(String[] tok) {
+  if (tok.length != 3) return dns -> "ERREUR : usage = add <ip> <nom.qualifie>";
+  String ip = tok[1], nom = tok[2];
+  return dns -> {
+    try {
+      dns.addItem(new AdresseIP(ip), new NomMachine(nom));
+      return "";
+    } catch (IllegalArgumentException e) {
+      return "ERREUR : " + e.getMessage();
+    } catch (java.io.IOException e) {
+      return "ERREUR I/O : " + e.getMessage();
     }
-    String ip = tok[1];
-    String nom = tok[2];
+  };
+}
 
-    return dns -> {
-      try {
-        dns.addItem(new AdresseIP(ip), new NomMachine(nom));
-        return ""; // succès silencieux
-      } catch (IllegalArgumentException e) {
-        return "ERREUR : " + e.getMessage();
-      } catch (IOException e) {
-        return "ERREUR IO : " + e.getMessage();
-      }
-    };
-  }
 
   private Commande buildLs(String[] tok) {
     boolean sortByIp = false;
