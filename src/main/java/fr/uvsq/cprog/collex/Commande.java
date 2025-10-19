@@ -1,7 +1,7 @@
 package fr.uvsq.cprog.collex;
 
-/** Commande exécutable sur un Dns, qui retourne un texte à afficher. */
-@FunctionalInterface
+/** Contrat d'une commande DNS : exécuter et renvoyer le texte à afficher. */
 public interface Commande {
-  String execute(Dns dns) throws Exception;
+    String QUIT_SENTINEL = "__QUIT__";
+    String execute(Dns dns);
 }
